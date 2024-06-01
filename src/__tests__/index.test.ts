@@ -24,16 +24,11 @@ const TestVariables = {
   NonZeroTelecelNumber: '730000000',
   NonZeroEconetNumber: '770000000',
   NonZeroNetoneNumber: '710000000',
-  ValidDomains:[
-    'econet.co.zw',
-    'uz.ac.zw',
-    'zispa.org.zw',
-  ],
-  InvalidDomains:[
-    'econet.com',
-    'uz.co.za',
-    'zispa.org.za',
-  ]
+  EconetNumberWithWhiteSpace: '0770 000 000',
+  NetoneNumberWithWhiteSpace: '0710 000 000',
+  TelecelNumberWithWhiteSpace: '0730 000 000',
+  ValidDomains: ['econet.co.zw', 'uz.ac.zw', 'zispa.org.zw'],
+  InvalidDomains: ['econet.com', 'uz.co.za', 'zispa.org.za'],
 };
 
 test('Validate Econet Number', () => {
@@ -58,6 +53,18 @@ test('Validate Non Zero Netone Number', () => {
 
 test('Validate Non Zero Telecel Number', () => {
   expect(SimpleRegex.MobileNumber.Telecel.test(TestVariables.NonZeroTelecelNumber)).toBe(true);
+});
+
+test('Validate Econet Number with White Space', () => {
+  expect(SimpleRegex.MobileNumber.Econet.test(TestVariables.EconetNumberWithWhiteSpace)).toBe(true);
+});
+
+test('Validate Netone Number with White Space', () => {
+  expect(SimpleRegex.MobileNumber.Netone.test(TestVariables.NetoneNumberWithWhiteSpace)).toBe(true);
+});
+
+test('Validate Telecel Number with White Space', () => {
+  expect(SimpleRegex.MobileNumber.Telecel.test(TestVariables.TelecelNumberWithWhiteSpace)).toBe(true);
 });
 
 test('Validate Passport Number', () => {
@@ -123,34 +130,42 @@ test("Invalid Short Driver's License", () => {
   expect(SimpleRegex.DriversLicence.test(TestVariables.ShortDriversLicense)).toBe(false);
 });
 
-test("Valid SSN", () => {
+test('Valid SSN', () => {
   expect(SimpleRegex.SSN.test(TestVariables.MockSSN)).toBe(true);
 });
 
-test("Invalid Short SSN", () => {
+test('Invalid Short SSN', () => {
   expect(SimpleRegex.SSN.test(TestVariables.ShortSSN)).toBe(false);
 });
 
-test("Invalid Long SSN", () => {
+test('Invalid Long SSN', () => {
   expect(SimpleRegex.SSN.test(TestVariables.LongSSN)).toBe(false);
 });
 
-test("Invalid SSN", () => {
+test('Invalid SSN', () => {
   expect(SimpleRegex.SSN.test(TestVariables.InvalidSSN)).toBe(false);
 });
 
-test("Can test for valid mobile numbers", () => {
-  expect(MobileNumber.test(TestVariables.EconetNumber1) && MobileNumber.test(TestVariables.NetoneNumber1) && MobileNumber.test(TestVariables.TelecelNumber1)).toBe(true);
+test('Can test for valid mobile numbers', () => {
+  expect(
+    MobileNumber.test(TestVariables.EconetNumber1) &&
+      MobileNumber.test(TestVariables.NetoneNumber1) &&
+      MobileNumber.test(TestVariables.TelecelNumber1),
+  ).toBe(true);
 });
 
-test("Can test for invalid mobile number", () => {
-  expect(!MobileNumber.test(TestVariables.LongEconetNumber) && !MobileNumber.test(TestVariables.LongNetoneNumber) && !MobileNumber.test(TestVariables.LongTelecelNumber)).toBe(true);
-})
+test('Can test for invalid mobile number', () => {
+  expect(
+    !MobileNumber.test(TestVariables.LongEconetNumber) &&
+      !MobileNumber.test(TestVariables.LongNetoneNumber) &&
+      !MobileNumber.test(TestVariables.LongTelecelNumber),
+  ).toBe(true);
+});
 
 test('Can test for valid domain name', () => {
-    TestVariables.ValidDomains.map((domain)=>{
-      expect(SimpleRegex.DomainName.test(domain)).toBe(true);   
-    })
+  TestVariables.ValidDomains.map(domain => {
+    expect(SimpleRegex.DomainName.test(domain)).toBe(true);
+  });
 });
 
 test('Can test for invalid domain name', () => {
